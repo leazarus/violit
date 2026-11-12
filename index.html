@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#17161b"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Violet Hour"><meta name="apple-mobile-web-app-status-bar-style" content="black"><title>Violet Hour — Habit Tracker</title>
+<style>
+:root{--bg:#17161b;--panel:#201f26;--panel2:#282730;--panel3:#33313c;--text:#ece9f2;--muted:#a19dae;--line:#ffffff17;--accent:#a58bd8;--accent2:#c3b0ee;--good:#9bc2ad;--on-accent:#1c1826;--glow1:#a58bd82b;--glow2:#a58bd822;--shadow:0 18px 50px #0005;--radius:22px;--serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif} [data-theme=light]{--bg:#e9e6ec;--panel:#f6f4f8;--panel2:#eeebf2;--panel3:#e0dce7;--text:#26222d;--muted:#6c6677;--line:#26222d1c;--accent:#6f55b0;--accent2:#8567c9;--good:#3f8a68;--on-accent:#ffffff;--glow1:#8567c922;--glow2:#6f55b01c;--shadow:0 18px 50px #26222d14}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;transition:.2s}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}.app{max-width:1160px;margin:auto;padding:22px 20px 90px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,var(--accent2),#71121d);display:grid;place-items:center;color:white;font-weight:900;letter-spacing:-2px}.brand h1{font-size:16px;letter-spacing:.16em;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:9px;letter-spacing:.16em}.top-actions{display:flex;gap:8px}.btn,.iconbtn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:11px;padding:10px 13px;display:inline-flex;align-items:center;justify-content:center;gap:7px}.iconbtn{width:41px;height:41px;padding:0;font-size:17px}.btn:hover,.iconbtn:hover{border-color:#9d86d980}.primary{background:var(--accent);color:white;border-color:var(--accent);font-weight:750}.primary:hover{background:var(--accent2)}.danger{color:#ff8b94}.hero{display:grid;grid-template-columns:1.35fr .8fr;gap:15px;margin-bottom:15px}.hero-copy,.progress,.section,.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.hero-copy{padding:28px;position:relative;overflow:hidden;min-height:220px}.hero-copy:after{content:"";position:absolute;width:250px;height:250px;right:-100px;bottom:-155px;border:1px solid #9d86d940;border-radius:50%;box-shadow:0 0 0 24px #9d86d910,0 0 0 50px #9d86d908}.eyebrow{color:var(--accent2);font-size:10px;letter-spacing:.2em;font-weight:800;text-transform:uppercase}.hero h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.045em;line-height:1.05;margin:14px 0}.hero-copy p{color:var(--muted);max-width:410px}.date{margin-top:24px;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.progress{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:22px}.ring{width:146px;height:146px;position:relative;margin-bottom:12px}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}.track{fill:none;stroke:var(--panel3);stroke-width:9}.value{fill:none;stroke:var(--accent2);stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset .3s}.ringcenter{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}.ringcenter strong{font-size:31px;letter-spacing:-.05em}.ringcenter span{font-size:9px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}.progress h3{margin:0}.muted{color:var(--muted);font-size:12px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}.stat{padding:15px 17px;box-shadow:none}.stat label{font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}.stat strong{display:block;font-size:24px;letter-spacing:-.04em;margin-top:5px}.stat small{color:var(--muted);font-size:10px}.columns{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:15px;align-items:start}.section{padding:19px;margin-bottom:15px;box-shadow:none;scroll-margin-top:15px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}.sectiontitle{display:flex;align-items:center;gap:10px}.secticon{width:34px;height:34px;border-radius:11px;background:var(--panel3);display:grid;place-items:center}.section h3{margin:0;font-size:15px}.sectionhead p{margin:3px 0 0;color:var(--muted);font-size:11px}.list{display:flex;flex-direction:column;gap:8px}.habit,.task,.reminder{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);background:var(--panel2);border-radius:14px;min-width:0}.dot{width:4px;align-self:stretch;min-height:40px;border-radius:6px;flex-shrink:0}.iteminfo{min-width:0;flex:1}.itemname{font-size:13px;font-weight:750;overflow-wrap:anywhere}.meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px;color:var(--muted);font-size:10px}.actions{display:flex;align-items:center;gap:3px}.mini{border:0;background:transparent;color:var(--muted);border-radius:8px;width:28px;height:29px}.mini:hover{background:var(--panel3);color:var(--text)}.check{width:33px;height:33px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--muted);font-size:16px}.check.checked{background:var(--good);border-color:var(--good);color:#071d14}.empty{padding:23px 12px;border:1px dashed var(--line);border-radius:13px;text-align:center;color:var(--muted);font-size:12px}.empty b{display:block;color:var(--text);margin-bottom:4px}.inlineform{display:flex;gap:8px;margin:10px 0 12px}input,select,textarea{width:100%;min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 11px;color:var(--text)}input::placeholder,textarea::placeholder{color:var(--muted)}.taskcheck{accent-color:var(--accent);width:17px;height:17px;flex-shrink:0}.done{text-decoration:line-through;color:var(--muted)}.status{font-size:9px;color:var(--muted);background:var(--panel3);padding:4px 7px;border-radius:20px;white-space:nowrap}.status.pending{color:#e4b66c}.status.connected{color:var(--good);background:#228b6318}.note{font-size:10px;color:var(--muted);line-height:1.6;margin:10px 0 0}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field label{font-size:10px;font-weight:750;letter-spacing:.06em;color:var(--muted)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.full{grid-column:1/-1}.colorrow{display:flex;gap:8px}.colorrow input[type=color]{width:47px;height:40px;padding:3px;flex-shrink:0}.weekdays{display:flex;gap:6px;flex-wrap:wrap}.day{position:relative}.day input{position:absolute;opacity:0}.day span{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--line);background:var(--panel2);border-radius:9px;color:var(--muted);font-size:11px;cursor:pointer}.day input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}.modalback{position:fixed;inset:0;background:#0009;z-index:30;display:none;align-items:center;justify-content:center;padding:16px}.modalback.open{display:flex}.modal{width:min(550px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:21px;box-shadow:0 30px 100px #0007}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modalhead h3{margin:0}.modalactions{display:flex;justify-content:flex-end;gap:8px;margin-top:15px}.exportbox{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px}.exportbox textarea{height:230px;resize:vertical;border:0;background:transparent;padding:0;font:10px/1.55 ui-monospace,Consolas,monospace}.exportactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.settingrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.settingrow:last-child{border-bottom:0}.settingrow b{font-size:12px}.settingrow small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.settingrow select{max-width:145px}.calendarhead{display:flex;align-items:center;gap:5px}.calendarhead strong{font-size:11px;min-width:90px;text-align:center}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal-label{text-align:center;color:var(--muted);font-size:9px;padding-bottom:3px}.calday{aspect-ratio:1;border:1px solid var(--line);background:var(--panel2);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--muted);font-size:10px}.calday.today{border-color:var(--accent2);color:var(--text)}.calday.complete{background:#228b6320;border-color:#228b6350;color:var(--good)}.calday small{font-size:8px}.hidden{display:none!important}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;transition:.2s;background:var(--text);color:var(--bg);padding:10px 15px;border-radius:11px;font-size:12px;font-weight:700;z-index:50;box-shadow:var(--shadow);text-align:center;max-width:calc(100% - 30px)}.toast.show{opacity:1;transform:translate(-50%,0)}footer{text-align:center;color:var(--muted);font-size:9px;letter-spacing:.13em;padding:12px}.bottomnav{display:none}
+.page{display:none;animation:pageIn .18s ease}.page.active{display:block}@keyframes pageIn{from{opacity:.65;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}.pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 16px;padding:0 2px}.pagehead h2{margin:0;font-size:24px;letter-spacing:-.04em}.pagehead p{margin:5px 0 0;color:var(--muted);font-size:12px}.pagebody{max-width:900px;margin:0 auto}.pagebody .section{margin-bottom:0}.pagebody .stats{margin-bottom:15px}.pagebody .section+.section{margin-top:15px}@media(max-width:780px){.app{padding:15px 13px 90px}.hero{grid-template-columns:1fr}.hero-copy{min-height:185px;padding:23px}.progress{flex-direction:row;justify-content:flex-start;text-align:left;gap:17px;padding:17px}.ring{width:96px;height:96px;margin:0;flex-shrink:0}.ringcenter strong{font-size:23px}.columns{grid-template-columns:1fr}.section{padding:15px}.stat{padding:12px}.stat strong{font-size:21px}.bottomnav{position:fixed;display:flex;justify-content:flex-start;overflow-x:auto;left:0;right:0;bottom:0;z-index:20;background:var(--panel);background:color-mix(in srgb,var(--panel) 98%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:7px 3px calc(7px + env(safe-area-inset-bottom))}.navbtn{flex:1 1 0;min-width:0;background:transparent;border:0;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;padding:4px 1px;border-radius:8px;white-space:nowrap;-webkit-tap-highlight-color:transparent}.navbtn span{font-size:17px}.navbtn.active{color:var(--accent2)}.top-actions .text{display:none}}
+@media(max-width:430px){.brand h1{font-size:14px}.brand p{font-size:8px}.mark{width:39px;height:39px}.stat label{font-size:8px}.stat strong{font-size:18px}.stat small{font-size:9px}.habit{padding:10px 8px;gap:8px}.itemname{font-size:12px}.actions{gap:0}.mini{width:25px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.progress{gap:12px}.ring{width:86px;height:86px}}
+
+/* --- layout fixes for narrow screens and Notion embeds --- */
+.top-actions{align-items:center;flex-wrap:nowrap;flex-shrink:0}.brand h1{white-space:nowrap}.status{white-space:nowrap}.sectionhead .btn{flex-shrink:0;white-space:nowrap}.btn .text{white-space:nowrap}
+.modal{max-height:92vh}.modalactions{position:sticky;bottom:-21px;background:var(--panel);padding:12px 0 2px;margin-bottom:-6px}
+@media(max-width:430px){.app{padding:16px 12px 90px}.brand h1{font-size:13px;letter-spacing:.1em}.brand p{font-size:8px;letter-spacing:.1em}.topbar{gap:8px}.brand{min-width:0;gap:9px}.brand p{display:none}.mark{width:38px;height:38px;border-radius:12px}.top-actions{gap:6px}.top-actions .status{font-size:9px;padding:4px 7px}.top-actions .iconbtn,.top-actions .btn{width:38px;height:38px;padding:0}.top-actions .btn .text{display:none}.sectionhead{flex-wrap:wrap}}
+
+.trow{display:flex;gap:8px;align-items:center;margin-bottom:8px}.trow input{flex:1;min-width:0}#addHabitTime{width:100%;margin-top:2px}
+/* --- backup export / import --- */
+.bk-pick{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);margin-bottom:8px;cursor:pointer}
+.bk-pick input{width:18px;height:18px;accent-color:var(--accent2);flex-shrink:0}
+.bk-pick span{flex:1;font-weight:650;font-size:13px}.bk-pick small{color:var(--muted);font-size:11px}
+.bk-pick.all{border-color:var(--accent);background:transparent}
+.bk-code{width:100%;min-height:130px;resize:vertical;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:10px 12px;font:11px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all}
+.bk-note{font-size:12px;color:var(--muted);margin:0 0 12px}
+.bk-msg{font-size:12px;margin:8px 0 12px;min-height:18px}.bk-msg.err{color:var(--accent2)}.bk-msg.ok{color:var(--good)}
+.bk-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 12px}
+.bk-mode label{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2);cursor:pointer;font-size:12px}
+.bk-mode input{margin-top:2px;accent-color:var(--accent2)}.bk-mode small{display:block;color:var(--muted);font-size:11px;font-weight:400}
+@media(max-width:430px){.bk-mode{grid-template-columns:1fr}}
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.slot{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:650;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.slot.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.streaksum{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:650;margin-bottom:12px}
+.streakcard{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:14px}
+.sc-top{display:flex;align-items:center;gap:10px}
+.sc-top .dot{width:6px;height:38px;border-radius:6px;flex-shrink:0}
+.sc-name{flex:1;min-width:0}.sc-name b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sc-name small{color:var(--muted);font-size:11px}
+.sc-big{text-align:right}.sc-big b{display:block;font-size:22px;line-height:1.1}.sc-big span{color:var(--muted);font-size:11px}
+.sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.sc-stats div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}
+.sc-stats b{display:block;font-size:16px}.sc-stats span{color:var(--muted);font-size:10px}
+.sc-label{color:var(--muted);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.sc-strip{display:grid;grid-template-columns:repeat(14,1fr);gap:4px}
+.sd{aspect-ratio:1;border-radius:4px;background:var(--panel3);display:block}
+.sd.on{background:var(--accent2)}.sd.part{background:var(--accent);opacity:.55}
+.sd.miss{background:transparent;border:1px solid var(--line)}.sd.wait{background:transparent;border:1px dashed var(--muted)}
+.sd.off{opacity:.25}.sd.today{outline:2px solid var(--text);outline-offset:1px}
+
+/* ===== Violet Hour theme layer ===== */
+body{font-family:"Avenir Next",Avenir,Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);background:radial-gradient(900px 460px at 85% -6%,var(--glow1),transparent 62%),radial-gradient(700px 520px at -12% 38%,var(--glow2),transparent 60%),var(--bg);background-repeat:no-repeat;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+[data-theme=light] body::before{opacity:.1;filter:invert(1)}
+.app{position:relative;z-index:1;padding-bottom:128px}
+h1,h2,h3,.stat strong,.ringcenter strong,.sc-big b{font-family:var(--serif)}
+.ic{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.brand h1{font-size:21px;font-style:italic;font-weight:600;letter-spacing:.01em}
+.brand p{letter-spacing:.22em;text-transform:uppercase}
+.mark{border-radius:50%;background:linear-gradient(150deg,var(--accent2),var(--accent));color:var(--on-accent);box-shadow:0 6px 18px var(--glow1)}
+.mark .ic{width:22px;height:22px}
+.btn:hover,.iconbtn:hover{border-color:var(--accent)}
+.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.primary:hover{background:var(--accent2);color:var(--on-accent)}
+.danger{color:#e59aa6}
+.iconbtn .ic,.btn .ic{width:18px;height:18px}
+.hero-copy,.progress,.section,.stat{border-radius:24px}
+.hero-copy:after{border:0;box-shadow:none;width:200px;height:290px;right:-14px;bottom:-56px;opacity:.5;border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 300'%3E%3Cpath d='M70 300C20 255 110 225 70 185S28 128 78 98 58 40 92 0' fill='none' stroke='%23c3b0ee' stroke-width='2.2' stroke-linecap='round' opacity='.8'/%3E%3Cpath d='M105 300C70 268 130 245 105 215S80 175 112 150' fill='none' stroke='%23c3b0ee' stroke-width='1.6' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E") no-repeat center/contain}
+.hero h2{font-weight:500;letter-spacing:-.02em}
+.hero h2 em{color:var(--accent2);font-style:italic}
+.eyebrow{color:var(--accent2);letter-spacing:.24em}
+.secticon{border-radius:50%;background:var(--panel3);color:var(--accent2)}
+.secticon .ic{width:18px;height:18px}
+.section h3{font-size:17px;font-weight:600}
+.pagehead h2{font-style:italic;font-weight:500;font-size:30px;letter-spacing:-.01em}
+.habit,.reminder{border-radius:18px}
+.check{border-radius:50%;width:36px;height:36px;display:grid;place-items:center;padding:0}
+.check .ic{width:19px;height:19px}
+.check.checked{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.mini{display:grid;place-items:center}.mini .ic{width:16px;height:16px}
+.task{background:transparent;border:0;border-bottom:1px dashed var(--line);border-radius:0;padding:13px 4px}
+.task:last-child{border-bottom:0}
+.reminder{border-left:3px solid var(--accent)}
+.slot.on,.day input:checked+span{color:var(--on-accent)}
+.calday{border-radius:12px}
+.calday.complete{background:var(--glow1);border-color:var(--accent);color:var(--accent2)}
+.status.pending{color:#d8c28f}
+[data-theme=light] .status.pending{color:#8a6a2c}
+.quotecard .qmark{transform:rotate(180deg)}
+[data-theme=light] .status.pending{color:#8a6d1f}
+.status.connected{color:var(--good);background:#9bc2ad22}
+.sd.today{outline-color:var(--accent2)}
+.streaksum{font-family:var(--serif);font-style:italic}
+.sc-big b .ic{width:20px;height:20px;color:var(--accent2);vertical-align:-3px}
+.quotecard{position:relative;margin:0 0 15px;padding:24px 22px 18px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(160deg,var(--panel),var(--panel2));overflow:hidden}
+.quotecard .qmark{position:absolute;top:14px;left:16px;width:36px;height:36px;color:var(--accent);opacity:.4;transform:rotate(180deg)}
+.quotecard blockquote{margin:0;padding:18px 0 0 2px;font-family:var(--serif);font-size:19px;line-height:1.5;font-style:italic}
+.qsrc{display:flex;flex-direction:column;gap:2px;margin-top:14px;padding-right:34px}
+.qsrc span{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2)}
+.qsrc small{color:var(--muted);font-size:12px}
+#quoteNext{position:absolute;right:10px;bottom:10px;border:1px solid var(--line);border-radius:50%;width:32px;height:32px}
+footer{font-family:var(--serif);font-style:italic;letter-spacing:.06em;text-transform:none;font-size:12px}
+.bottomnav{position:fixed;display:flex;left:50%;right:auto;transform:translateX(-50%);width:min(580px,calc(100% - 20px));bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;padding:6px;gap:2px;border-radius:28px;overflow:visible;border:1px solid var(--line);background:var(--panel);background:color-mix(in srgb,var(--panel) 90%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 14px 40px #0006,inset 0 1px 0 #ffffff0d}
+[data-theme=light] .bottomnav{box-shadow:0 14px 36px #26222d26,inset 0 1px 0 #ffffff80}
+.navbtn{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 6px;border:0;border-radius:22px;background:transparent;color:var(--muted);font-size:9.5px;letter-spacing:.02em;white-space:nowrap;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+.navbtn .ic{width:21px;height:21px}
+.navbtn span{font-size:9.5px}
+.navbtn.active{background:var(--accent);color:var(--on-accent);font-weight:700}
+.toast{bottom:calc(96px + env(safe-area-inset-bottom))}
+@media(max-width:360px){.navbtn{font-size:8.5px}.navbtn span{font-size:8.5px}.navbtn .ic{width:19px;height:19px}}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c0 1.5 1.5 1.5 1.5 3M12 3c0 1.5 1.5 1.5 1.5 3"/><path d="M3 21h14"/></symbol>
+<symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></symbol>
+<symbol id="i-feather" viewBox="0 0 24 24"><path d="M20 4c-8 0-13 5-14 13l-2 3.5"/><path d="M20 4c0 6-4 10-10 10"/><path d="M6 17h6M9 13.5h5"/></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M7 3v3.5a5 5 0 0 0 2 4L12 12l-3 1.5a5 5 0 0 0-2 4V21M17 3v3.5a5 5 0 0 1-2 4L12 12l3 1.5a5 5 0 0 1 2 4V21"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5zM12 6.5v13"/></symbol>
+<symbol id="i-smoke" viewBox="0 0 24 24"><path d="M8 21c-2.5-2-2.5-4.5 0-6.5s2.5-4 0-6S7.5 4 10 2.5"/><path d="M15 21c-2-1.6-2-3.4 0-5s2-3 0-4.5"/></symbol>
+<symbol id="i-perfume" viewBox="0 0 24 24"><path d="M9 3h6v3H9z"/><path d="M7 9.5A2.5 2.5 0 0 1 9.5 7h5A2.5 2.5 0 0 1 17 9.5V19a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9.5z"/><path d="M10 13h4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+<symbol id="i-contrast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24"><path d="M6.5 8h3.5v4c0 3-1.2 4.6-3.5 5.2M14 8h3.5v4c0 3-1.2 4.6-3.5 5.2"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 3 4 4.5 4 9a4 4 0 0 1-8 0c0-2 1-3 2-4 0 1.5 1 2 1.5 2C11.5 8 11 5.5 12 3z"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v4.5h-4.5"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-7 18-4-7-7-4 18-7z"/></symbol>
+</defs></svg><div class="app" id="top">
+<header class="topbar"><div class="brand"><div class="mark"><svg class="ic"><use href="#i-moon"/></svg></div><div><h1>Violet Hour</h1><p>Rituals, slowly kept</p></div></div><div class="top-actions"><span id="connectionBadge" class="status pending" title="Reminder server status">● Not connected</span><button class="iconbtn" id="quickTheme" title="Toggle theme"><svg class="ic"><use href="#i-contrast"/></svg></button><button class="btn" id="backupTop"><svg class="ic"><use href="#i-upload"/></svg><span class="text">Backup</span></button></div></header>
+<div class="page active" id="page-home" data-page="home">
+<section class="hero"><div class="hero-copy"><div class="eyebrow" id="greeting">Good evening</div><h2>Slow rituals,<br><em>steady you.</em></h2><p>Coffee, a few pages, a little movement — let the day gather around them.</p><div class="date" id="todayLabel"></div></div><div class="progress"><div class="ring"><svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="49"/><circle class="value" id="ringValue" cx="60" cy="60" r="49" stroke-dasharray="307.876" stroke-dashoffset="307.876"/></svg><div class="ringcenter"><strong id="progressPct">0%</strong><span>completed</span></div></div><div><h3>Today's Progress</h3><p class="muted" id="progressCaption">Start with one habit.</p></div></div></section>
+<section class="quotecard" id="quoteCard"><svg class="ic qmark"><use href="#i-quote"/></svg><blockquote id="quoteText"></blockquote><div class="qsrc"><span id="quoteBook"></span><small id="quoteAuthor"></small></div><button type="button" class="mini" id="quoteNext" title="Another quote" aria-label="Another quote"><svg class="ic"><use href="#i-refresh"/></svg></button></section>
+<section class="stats"><div class="stat"><label>Habits today</label><strong id="statHabits">0/0</strong><small>completed habits</small></div><div class="stat"><label>Active streak</label><strong id="statStreak">0 days</strong><small>best current run</small></div><div class="stat"><label>Tasks left</label><strong id="statTasks">0</strong><small>still to do</small></div></section>
+<div class="section"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-coffee"/></svg></div><div><h3>Begin gently</h3><p>One small ritual is enough to start.</p></div></div></div><p class="muted">Use the bar below to move between your rituals, notes, reminders and journal. Each page keeps to one quiet job.</p><button class="btn primary" id="openHabitsBtn" type="button">Open today's habits →</button></div>
+</div>
+<div class="page" id="page-habits" data-page="habits"><div class="pagehead"><div><h2>Daily Rituals</h2><p>Small things, kept gently, every day.</p></div></div><div class="pagebody"><section class="section" id="habitsSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-dumbbell"/></svg></div><div><h3>Rituals</h3><p>Show up for the things that matter.</p></div></div><button class="btn primary" id="addHabit"><svg class="ic"><use href="#i-plus"/></svg><span class="text">Add habit</span></button></div><div class="list" id="habitList"></div><div class="empty hidden" id="habitEmpty"><b>No habits yet</b>Add your first habit and start building consistency.</div></section></div></div>
+<div class="page" id="page-tasks" data-page="tasks"><div class="pagehead"><div><h2>Notes to Self</h2><p>Keep today's priorities in sight.</p></div></div><div class="pagebody"><section class="section" id="tasksSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-feather"/></svg></div><div><h3>Today's Tasks</h3><p>Keep today's priorities in sight.</p></div></div><button class="iconbtn" id="focusTask" title="Add a note" aria-label="Add a note"><svg class="ic"><use href="#i-plus"/></svg></button></div><form class="inlineform" id="taskForm"><input id="taskInput" maxlength="120" placeholder="Add a task..." aria-label="New task"><button class="btn primary">Add</button></form><div class="list" id="taskList"></div><div class="empty hidden" id="taskEmpty">No tasks yet. Add one small next step.</div></section></div></div>
+<div class="page" id="page-reminders" data-page="reminders"><div class="pagehead"><div><h2>Gentle Nudges</h2><p>Plan your reminders and send them to Telegram.</p></div></div><div class="pagebody"><section class="section" id="remindersSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-hourglass"/></svg></div><div><h3>Reminders</h3><p>Plan here, get a message when it is time.</p></div></div><button class="iconbtn" id="addReminder" title="Add a reminder" aria-label="Add a reminder"><svg class="ic"><use href="#i-plus"/></svg></button></div><div class="list" id="reminderList"></div><div class="empty hidden" id="reminderEmpty"><b>No reminders planned</b>Add a reminder time to a habit or create one below.</div><button class="btn" id="jumpSync" style="width:100%;margin-top:11px"><svg class="ic"><use href="#i-smoke"/></svg> Open the Telegram link</button><p class="note">Reminders are sent only after Make is configured and connected. Sync your planner data to update Make.</p></section></div></div>
+<div class="page" id="page-calendar" data-page="calendar"><div class="pagehead"><div><h2>The Journal</h2><p>Your consistency day by day, and every ritual's streak.</p></div></div><div class="pagebody"><section class="section" id="calendarSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-book"/></svg></div><div><h3>Progress Calendar</h3><p>Daily completion overview.</p></div></div><div class="calendarhead"><button class="mini" id="prevMonth">‹</button><strong id="monthTitle"></strong><button class="mini" id="nextMonth">›</button></div></div><div class="calendar" id="calendar"></div><p class="note">Progress is calculated from check-ins saved in this browser.</p></section>
+<section class="section" id="streakSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-flame"/></svg></div><div><h3>Ritual streaks</h3><p>How many days in a row you kept each ritual.</p></div></div></div><div class="streaksum hidden" id="streakSummary"></div><div class="list" id="streakList"></div><div class="empty hidden" id="streakEmpty"><b>No habits yet</b>Add a habit and your streaks will appear here.</div><p class="note">Streaks are counted from your saved check-ins, so they stay even if you edit a habit. Only the days a habit is scheduled count.</p></section></div></div>
+<div class="page" id="page-sync" data-page="sync"><div class="pagehead"><div><h2>Telegram Link</h2><p>Send planner data to your private reminder server.</p></div><span id="syncStatus" class="status pending">Not configured</span></div><div class="pagebody"><section class="section" id="syncSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-smoke"/></svg></div><div><h3>Connection</h3><p>Connect Violet Hour to your Cloudflare Worker.</p></div></div></div><div class="field"><label for="workerUrl">CLOUDFLARE WORKER URL</label><input id="workerUrl" type="url" placeholder="https://violet-hour-sync.yourname.workers.dev" autocomplete="url"><small class="muted">Paste your Cloudflare Worker URL here.</small></div><div class="field"><label for="timezone">TIME ZONE</label><input id="timezone" placeholder="e.g. Europe/London"></div><div class="settingrow"><div><b>Automatic sync</b><small>Sync changed planner data after a short delay.</small></div><label class="day"><input type="checkbox" id="autoSync"><span style="width:auto;padding:0 12px">Enabled</span></label></div><div class="exportactions"><button class="btn" id="testConnection">Test connection</button><button class="btn primary" id="syncNow">↻ Sync now</button></div><div class="section" id="tgCard" style="margin-top:15px;background:var(--panel2)"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-send"/></svg></div><div><h3>Telegram reminders</h3><p>Connect once to receive reminders in Telegram.</p></div></div><span id="tgBadge" class="status pending">Not connected</span></div><div class="exportactions"><button type="button" class="btn primary" id="tgConnect">Connect Telegram</button></div><p class="note hidden" id="tgLinkNote">Open this link, then press <b>Start</b> in Telegram:<br><a id="tgLink" href="#" target="_blank" rel="noopener" style="color:var(--accent2);word-break:break-all"></a></p></div><div class="section" style="margin-top:15px;background:var(--panel2)"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-feather"/></svg></div><div><h3>What sync sends</h3><p>Planner data only — never bot tokens.</p></div></div></div><div class="meta" style="font-size:12px;line-height:1.8">Habits and reminder settings · daily check-ins · tasks · theme and timezone · progress summary</div></div><p class="note">Reminders are checked every minute on Cloudflare. Sync once, press Connect Telegram once, and you are done. Your data stays in this browser too.</p></section></div></div>
+<div class="page" id="page-settings" data-page="settings"><div class="pagehead"><div><h2>Preferences</h2><p>Make the planner yours and look after your data.</p></div></div><div class="pagebody"><section class="section" id="settingsSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-perfume"/></svg></div><div><h3>Settings</h3><p>Make it work for you.</p></div></div></div><div class="settingrow"><div><b>Appearance</b><small>Choose a theme.</small></div><select id="themeSelect"><option value="dark">Dark</option><option value="light">Light</option><option value="auto">Auto</option></select></div><div class="settingrow"><div><b>Literary quotes</b><small>Add a line from a novel to each Telegram reminder.</small></div><input type="checkbox" id="quotesPref" class="taskcheck" checked></div><div class="settingrow"><div><b>Export backup</b><small>Choose what to include and copy it as a backup code.</small></div><button class="btn" id="backup">Export</button></div><div class="settingrow"><div><b>Import backup</b><small>Paste a backup code to restore or merge your data.</small></div><button class="btn" id="import">Import</button></div><div class="settingrow"><div><b>Reset planner</b><small>Clear data from this browser.</small></div><button class="btn danger" id="reset">Reset</button></div><p class="note">Planner data is saved in this browser. Sync sends a copy to your private reminder server; it does not automatically download remote data onto a second phone. Export a backup before clearing browser data.</p></section></div></div>
+<footer>Violet Hour · slow rituals, steady you</footer></div>
+<nav class="bottomnav" aria-label="Main"><button class="navbtn active" data-target="page-home" aria-label="Today"><svg class="ic"><use href="#i-coffee"/></svg><span>Today</span></button><button class="navbtn" data-target="page-habits" aria-label="Habits"><svg class="ic"><use href="#i-dumbbell"/></svg><span>Habits</span></button><button class="navbtn" data-target="page-tasks" aria-label="Notes"><svg class="ic"><use href="#i-feather"/></svg><span>Notes</span></button><button class="navbtn" data-target="page-reminders" aria-label="Reminders"><svg class="ic"><use href="#i-hourglass"/></svg><span>Reminders</span></button><button class="navbtn" data-target="page-calendar" aria-label="Journal"><svg class="ic"><use href="#i-book"/></svg><span>Journal</span></button><button class="navbtn" data-target="page-sync" aria-label="Sync"><svg class="ic"><use href="#i-smoke"/></svg><span>Sync</span></button><button class="navbtn" data-target="page-settings" aria-label="Settings"><svg class="ic"><use href="#i-perfume"/></svg><span>Settings</span></button></nav>
+<div class="modalback" id="habitModal"><div class="modal"><div class="modalhead"><h3 id="habitModalTitle">Add a habit</h3><button class="iconbtn" id="closeHabit"><svg class="ic"><use href="#i-x"/></svg></button></div><form id="habitForm"><input type="hidden" id="habitId"><div class="formgrid"><div class="field full"><label for="habitName">HABIT NAME *</label><input id="habitName" required maxlength="80" placeholder="e.g. Practice violin"></div><div class="field"><label for="category">CATEGORY</label><select id="category"><option>Personal Growth</option><option>Health</option><option>Fitness</option><option>Learning</option><option>Mindfulness</option><option>Work</option><option>Other</option></select></div><div class="field full"><label for="habitTime">REMINDER TIMES (OPTIONAL)</label><div class="trow"><input id="habitTime" type="time"></div><div id="habitExtraTimes"></div><button type="button" class="btn" id="addHabitTime"><svg class="ic"><use href="#i-plus"/></svg> Add another time</button></div><div class="field full"><label>ACTIVE DAYS</label><div class="weekdays" id="weekdays"><label class="day"><input type="checkbox" value="mon" checked><span>M</span></label><label class="day"><input type="checkbox" value="tue" checked><span>T</span></label><label class="day"><input type="checkbox" value="wed" checked><span>W</span></label><label class="day"><input type="checkbox" value="thu" checked><span>T</span></label><label class="day"><input type="checkbox" value="fri" checked><span>F</span></label><label class="day"><input type="checkbox" value="sat" checked><span>S</span></label><label class="day"><input type="checkbox" value="sun" checked><span>S</span></label></div></div><div class="field"><label for="habitColor">CUSTOM COLOR</label><div class="colorrow"><input type="color" id="habitColor" value="#9d86d9"><input id="habitHex" value="#9d86d9" maxlength="7" aria-label="Hex color"></div></div><div class="field"><label for="habitStart">START DATE</label><input type="date" id="habitStart"></div><div class="field full"><label for="habitMessage">REMINDER MESSAGE</label><input id="habitMessage" maxlength="220" placeholder="Time to show up for yourself."></div><div class="field full"><label for="habitNotes">NOTE (OPTIONAL)</label><textarea id="habitNotes" rows="2" maxlength="300" placeholder="Your reason, target, or small tip..."></textarea></div></div><div class="modalactions"><button type="button" class="btn" id="cancelHabit">Cancel</button><button class="btn primary">Save habit</button></div></form></div></div>
+<div class="modalback" id="reminderModal"><div class="modal"><div class="modalhead"><h3 id="reminderModalTitle">Add a reminder</h3><button class="iconbtn" id="closeReminder"><svg class="ic"><use href="#i-x"/></svg></button></div><form id="reminderForm"><input type="hidden" id="reminderId"><div class="field"><label for="reminderName">REMINDER TITLE *</label><input id="reminderName" required maxlength="100" placeholder="e.g. Evening reading"></div><div class="formgrid"><div class="field"><label for="reminderDate">DATE *</label><input type="date" id="reminderDate" required></div><div class="field"><label for="reminderTime">TIME *</label><input type="time" id="reminderTime" required></div><div class="field full"><label for="reminderMessage">TELEGRAM MESSAGE</label><textarea id="reminderMessage" rows="3" maxlength="500" placeholder="Write the message you want to receive."></textarea></div><div class="field full"><label class="day"><input type="checkbox" id="reminderEnabled" checked><span style="width:auto;padding:0 12px">Include in export</span></label></div></div><div class="modalactions"><button type="button" class="btn" id="cancelReminder">Cancel</button><button class="btn primary">Save reminder</button></div></form></div></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modalback" id="exportModal"><div class="modal">
+<div class="modalhead"><h3>Export backup</h3><button class="iconbtn" id="closeExport" type="button"><svg class="ic"><use href="#i-x"/></svg></button></div>
+<p class="bk-note">Choose what to include, then copy the code and paste it anywhere safe (a note, Notion, Telegram Saved Messages).</p>
+<div id="expPicks"></div>
+<div class="field"><label for="expCode">BACKUP CODE</label><textarea id="expCode" class="bk-code" readonly></textarea></div>
+<div class="modalactions"><button type="button" class="btn" id="expDone">Close</button><button type="button" class="btn primary" id="expCopy">Copy code</button></div>
+</div></div>
+<div class="modalback" id="importModal"><div class="modal">
+<div class="modalhead"><h3>Import backup</h3><button class="iconbtn" id="closeImport" type="button"><svg class="ic"><use href="#i-x"/></svg></button></div>
+<p class="bk-note">Paste your backup code below. Then choose what to bring in.</p>
+<div class="field"><label for="impCode">BACKUP CODE</label><textarea id="impCode" class="bk-code" placeholder="Paste the code here…"></textarea></div>
+<div class="bk-msg" id="impMsg"></div>
+<div id="impOptions" class="hidden">
+<div id="impPicks"></div>
+<div class="bk-mode">
+<label><input type="radio" name="impMode" value="merge" checked><span><b>Add to current</b><small>Keeps what you have and adds what is missing.</small></span></label>
+<label><input type="radio" name="impMode" value="replace"><span><b>Replace</b><small>Replaces the chosen parts with the backup.</small></span></label>
+</div></div>
+<div class="modalactions"><button type="button" class="btn" id="impCancel">Cancel</button><button type="button" class="btn primary" id="impGo" disabled>Import</button></div>
+</div></div>
+<script>
+(()=>{'use strict';const __mem={};const __store=(()=>{try{const k='__dk_probe';window.localStorage.setItem(k,'1');window.localStorage.removeItem(k);return window.localStorage}catch(e){return null}})();
+const __wn=()=>{try{const o=JSON.parse(window.name||'{}');return(o&&typeof o==='object')?o:{}}catch(e){return{}}};
+const storage={blocked:!__store,getItem(k){if(__store){try{return __store.getItem(k)}catch(e){}}const v=__wn()['vh:'+k];return v===undefined?(__mem[k]??null):v},setItem(k,v){if(__store){try{__store.setItem(k,v);return}catch(e){}}__mem[k]=v;try{const o=__wn();o['vh:'+k]=v;window.name=JSON.stringify(o)}catch(e){}}};
+const KEY='violetHourPlanner_v1',$=id=>document.getElementById(id),today=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`},uid=p=>p+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7),copy=o=>JSON.parse(JSON.stringify(o));
+const defaults=()=>({version:1,theme:'dark',quotes:true,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC',habits:[],logs:{},tasks:[],reminders:[],calendarOffset:0,sync:{workerUrl:'',auto:false,lastSyncAt:null}});let data;try{data={...defaults(),...(JSON.parse(storage.getItem(KEY)||'{}'))};if(!Array.isArray(data.habits))data.habits=[];if(!data.logs)data.logs={};if(!Array.isArray(data.tasks))data.tasks=[];if(!Array.isArray(data.reminders))data.reminders=[];if(!data.sync)data.sync={workerUrl:'',auto:false,lastSyncAt:null}}catch(e){data=defaults()}
+let syncDebounce=null,isSyncing=false;function save(){try{const serialized=JSON.stringify(data),previous=storage.getItem(KEY)||'';storage.setItem(KEY,serialized);if(previous&&previous!==serialized&&data.sync?.auto&&data.sync?.workerUrl){clearTimeout(syncDebounce);syncDebounce=setTimeout(()=>syncWithMake(false),1400)}}catch(e){toast('Could not save data. Export a backup and check browser storage settings.')}}function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function parse(iso){let [y,m,d]=iso.split('-').map(Number);return new Date(y,m-1,d)}function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}function dayKey(d){return ['sun','mon','tue','wed','thu','fri','sat'][d.getDay()]}function scheduled(h,date){return (h.days||[]).includes(dayKey(parse(date)))&&(!h.startDate||date>=h.startDate)}function slotKey(h,t){return h.id+'@'+t}
+function slotDone(h,date,t){const L=data.logs[date]||{};return !!(L[h.id]||L[slotKey(h,t)])}
+function done(h,date){const L=data.logs[date]||{};if(L[h.id])return true;const ts=habitTimes(h);return ts.length>1&&ts.every(t=>L[slotKey(h,t)])}
+function slotsDone(h,date){const ts=habitTimes(h);if(ts.length<2)return done(h,date)?1:0;return ts.filter(t=>slotDone(h,date,t)).length}
+function frac(h,date){const ts=habitTimes(h);if(ts.length<2)return done(h,date)?1:0;return slotsDone(h,date)/ts.length}function dayHabits(date){return data.habits.filter(h=>h.active!==false&&scheduled(h,date))}function pct(date){let hs=dayHabits(date);return hs.length?Math.round(hs.reduce((a,h)=>a+frac(h,date),0)/hs.length*100):0}function streak(h){let d=parse(today()),n=0;if(!done(h,today()))d.setDate(d.getDate()-1);for(let i=0;i<3660;i++){let date=iso(d);if(date<(h.startDate||'0000-00-00'))break;if(scheduled(h,date)){if(done(h,date))n++;else break}d.setDate(d.getDate()-1)}return n}let toastTimer;function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2300)}function systemTheme(){try{return window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}catch(e){return 'dark'}}
+function theme(){const pref=data.theme||'dark';const t=pref==='auto'?systemTheme():pref;document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='light'?'#e9e6ec':'#17161b');$('themeSelect').value=pref}
+function renderStats(){let hs=dayHabits(today()),n=hs.filter(h=>done(h,today())).length,p=hs.length?Math.round(n/hs.length*100):0;$('statHabits').textContent=`${n}/${hs.length}`;$('progressPct').textContent=p+'%';$('ringValue').style.strokeDashoffset=307.876-307.876*p/100;$('progressCaption').textContent=!hs.length?'No habits scheduled today.':p===100?'You showed up for every habit.':`${hs.length-n} ${hs.length-n===1?'habit':'habits'} left for today.`;$('statStreak').textContent=Math.max(0,...data.habits.filter(h=>h.active!==false).map(streak))+' days';$('statTasks').textContent=data.tasks.filter(t=>!t.done).length}
+function renderHabits(){let list=$('habitList');list.innerHTML='';let hs=dayHabits(today()),display=hs.length?hs:data.habits.filter(h=>h.active!==false);$('habitEmpty').classList.toggle('hidden',data.habits.length>0);if(!hs.length&&display.length)list.innerHTML='<div class="empty">No active habits scheduled today. Your habits are shown below for editing.</div>';display.forEach(h=>{let isDone=done(h,today()),el=document.createElement('div');el.className='habit';el.innerHTML=`<div class="dot" style="background:${esc(h.color||'#9d86d9')}"></div><div class="iteminfo"><div class="itemname">${esc(h.name)}</div><div class="meta"><span>${esc(h.category||'Other')}</span>${habitTimes(h).length?`<span>· ${esc(habitTimes(h).join(', '))}</span>`:''}<span>· ${streak(h)} day streak</span>${habitTimes(h).length>1&&hs.includes(h)?`<span>· ${slotsDone(h,today())}/${habitTimes(h).length} today</span>`:''}${!hs.includes(h)?'<span>· not scheduled today</span>':''}</div>${hs.includes(h)&&habitTimes(h).length>1?`<div class="slots">${habitTimes(h).map(t=>`<button type="button" class="slot${slotDone(h,today(),t)?' on':''}" data-t="${t}" title="Mark ${t} as done">${slotDone(h,today(),t)?'✓':'○'} ${t}</button>`).join('')}</div>`:''}</div><div class="actions"><button class="mini edit" title="Edit habit"><svg class="ic"><use href="#i-pencil"/></svg></button><button class="mini delete" title="Delete habit"><svg class="ic"><use href="#i-x"/></svg></button>${hs.includes(h)?`<button class="check ${isDone?'checked':''}" title="Toggle completion">${isDone?'<svg class="ic"><use href="#i-check"/></svg>':''}</button>`:''}</div>`;el.querySelector('.edit').onclick=()=>openHabit(h.id);el.querySelector('.delete').onclick=()=>deleteHabit(h.id);let c=el.querySelector('.check');if(c)c.onclick=()=>{const L=(data.logs[today()]??={}),ts=habitTimes(h);if(done(h,today())){delete L[h.id];ts.forEach(t=>delete L[slotKey(h,t)])}else if(ts.length>1)ts.forEach(t=>L[slotKey(h,t)]=true);else L[h.id]=true;save();render()};
+el.querySelectorAll('.slot').forEach(b=>b.onclick=()=>{const t=b.dataset.t,L=(data.logs[today()]??={}),k=slotKey(h,t);if(L[h.id]){delete L[h.id];habitTimes(h).forEach(x=>{if(x!==t)L[slotKey(h,x)]=true});delete L[k]}else if(L[k])delete L[k];else L[k]=true;save();render()});list.append(el)});if(!data.habits.length)$('habitEmpty').classList.remove('hidden')}
+function renderTasks(){let list=$('taskList');list.innerHTML='';data.tasks.slice().sort((a,b)=>(a.done-b.done)).forEach(t=>{let el=document.createElement('div');el.className='task';el.innerHTML=`<input class="taskcheck" type="checkbox" ${t.done?'checked':''}><div class="iteminfo"><div class="itemname ${t.done?'done':''}">${esc(t.title)}</div><div class="meta">${t.done?'Completed':'To do'} · ${esc(t.createdAt||today())}</div></div><button class="mini delete"><svg class="ic"><use href="#i-x"/></svg></button>`;el.querySelector('input').onchange=e=>{t.done=e.target.checked;save();render()};el.querySelector('.delete').onclick=()=>{data.tasks=data.tasks.filter(x=>x.id!==t.id);save();render()};list.append(el)});$('taskEmpty').classList.toggle('hidden',data.tasks.length>0)}
+function renderReminders(){let list=$('reminderList');list.innerHTML='';let all=[...data.habits.filter(h=>h.active!==false&&habitTimes(h).length).flatMap(h=>habitTimes(h).map(t=>({id:h.id,title:h.name,time:t,message:h.message,type:'habit'}))),...data.reminders.filter(r=>r.enabled!==false).map(r=>({...r,type:'custom'}))].sort((a,b)=>(a.time||'').localeCompare(b.time||''));all.slice(0,12).forEach(r=>{let el=document.createElement('div');el.className='reminder';el.innerHTML=`<div class="secticon"><svg class="ic"><use href="#i-hourglass"/></svg></div><div class="iteminfo"><div class="itemname">${esc(r.title||r.name)}</div><div class="meta">${esc(r.time||'No time')}${r.date?' · '+esc(r.date):''}${r.type==='habit'?' · Habit':''}</div></div><span class="status pending">${r.type==='habit'?'Schedule':'Planned'}</span>${r.type==='custom'?'<button class="mini edit"><svg class="ic"><use href="#i-pencil"/></svg></button><button class="mini delete"><svg class="ic"><use href="#i-x"/></svg></button>':''}`;if(r.type==='custom'){el.querySelector('.edit').onclick=()=>openReminder(r.id);el.querySelector('.delete').onclick=()=>{data.reminders=data.reminders.filter(x=>x.id!==r.id);save();render()}}list.append(el)});$('reminderEmpty').classList.toggle('hidden',all.length>0)}
+function renderCalendar(){let base=new Date();base.setDate(1);base.setMonth(base.getMonth()+(data.calendarOffset||0));$('monthTitle').textContent=base.toLocaleDateString(undefined,{month:'short',year:'numeric'});let grid=$('calendar');grid.innerHTML='';['M','T','W','T','F','S','S'].forEach(s=>{let e=document.createElement('div');e.className='cal-label';e.textContent=s;grid.append(e)});let offset=(base.getDay()+6)%7;for(let i=0;i<offset;i++){let e=document.createElement('div');e.className='calday';e.style.visibility='hidden';grid.append(e)}let count=new Date(base.getFullYear(),base.getMonth()+1,0).getDate();for(let n=1;n<=count;n++){let d=new Date(base.getFullYear(),base.getMonth(),n),date=iso(d),p=pct(date),e=document.createElement('div');e.className='calday'+(date===today()?' today':'')+(p===100&&dayHabits(date).length?' complete':'');e.innerHTML=`<span>${n}</span><small>${dayHabits(date).length?p+'%':'—'}</small>`;e.title=`${date}: ${dayHabits(date).length?p+'% completed':'No habits scheduled'}`;grid.append(e)}}
+/* --- quotes & greeting --- */
+const QUOTES=[{"q": "So we beat on, boats against the current, borne back ceaselessly into the past.", "b": "The Great Gatsby", "a": "F. Scott Fitzgerald"}, {"q": "Can’t repeat the past? Why of course you can!", "b": "The Great Gatsby", "a": "F. Scott Fitzgerald"}, {"q": "I know not all that may be coming, but be it what it will, I’ll go to it laughing.", "b": "Moby-Dick", "a": "Herman Melville"}, {"q": "It is not down on any map; true places never are.", "b": "Moby-Dick", "a": "Herman Melville"}, {"q": "I am no bird; and no net ensnares me: I am a free human being with an independent will.", "b": "Jane Eyre", "a": "Charlotte Brontë"}, {"q": "I would always rather be happy than dignified.", "b": "Jane Eyre", "a": "Charlotte Brontë"}, {"q": "Whatever our souls are made of, his and mine are the same.", "b": "Wuthering Heights", "a": "Emily Brontë"}, {"q": "You pierce my soul. I am half agony, half hope.", "b": "Persuasion", "a": "Jane Austen"}, {"q": "In vain I have struggled. It will not do. My feelings will not be repressed.", "b": "Pride and Prejudice", "a": "Jane Austen"}, {"q": "Beware; for I am fearless, and therefore powerful.", "b": "Frankenstein", "a": "Mary Shelley"}, {"q": "Nothing is so painful to the human mind as a great and sudden change.", "b": "Frankenstein", "a": "Mary Shelley"}, {"q": "I have been bent and broken, but—I hope—into a better shape.", "b": "Great Expectations", "a": "Charles Dickens"}, {"q": "What do we live for, if it is not to make life less difficult to each other?", "b": "Middlemarch", "a": "George Eliot"}, {"q": "The world breaks everyone and afterward many are strong at the broken places.", "b": "A Farewell to Arms", "a": "Ernest Hemingway"}, {"q": "A man can be destroyed but not defeated.", "b": "The Old Man and the Sea", "a": "Ernest Hemingway"}, {"q": "All human wisdom is contained in these two words — Wait and hope.", "b": "The Count of Monte Cristo", "a": "Alexandre Dumas"}, {"q": "Above all, don’t lie to yourself.", "b": "The Brothers Karamazov", "a": "Fyodor Dostoevsky"}, {"q": "Pain and suffering are always inevitable for a large intelligence and a deep heart.", "b": "Crime and Punishment", "a": "Fyodor Dostoevsky"}, {"q": "A whole moment of happiness! Is that too little for the whole of a man’s life?", "b": "White Nights", "a": "Fyodor Dostoevsky"}, {"q": "Beauty will save the world.", "b": "The Idiot", "a": "Fyodor Dostoevsky"}, {"q": "The strongest of all warriors are these two — Time and Patience.", "b": "War and Peace", "a": "Leo Tolstoy"}, {"q": "There are only two or three human stories, and they go on repeating themselves as fiercely as if they had never happened before.", "b": "O Pioneers!", "a": "Willa Cather"}, {"q": "For now she need not think of anybody. She could be herself, by herself.", "b": "To the Lighthouse", "a": "Virginia Woolf"}, {"q": "A woman must have money and a room of her own if she is to write fiction.", "b": "A Room of One’s Own", "a": "Virginia Woolf"}, {"q": "The supreme happiness of life is the conviction that we are loved.", "b": "Les Misérables", "a": "Victor Hugo"}, {"q": "The books that the world calls immoral are books that show the world its own shame.", "b": "The Picture of Dorian Gray", "a": "Oscar Wilde"}, {"q": "It is difficult for a woman to define her feelings in language which is chiefly made by men to express theirs.", "b": "Far from the Madding Crowd", "a": "Thomas Hardy"}, {"q": "We are all in the gutter, but some of us are looking at the stars.", "b": "Lady Windermere’s Fan", "a": "Oscar Wilde"}];
+let quoteOffset=0;
+function renderQuote(){const d=new Date(),n=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000),q=QUOTES[(n+quoteOffset)%QUOTES.length];$('quoteText').textContent='\u201c'+q.q+'\u201d';$('quoteBook').textContent=q.b;$('quoteAuthor').textContent='by '+q.a}
+function renderGreeting(){const h=new Date().getHours();$('greeting').textContent=h<5?'Good night':h<12?'Good morning':h<18?'Good afternoon':'Good evening'}
+$('quoteNext').onclick=()=>{quoteOffset=(quoteOffset+1)%QUOTES.length;renderQuote()};
+$('quotesPref').checked=data.quotes!==false;
+$('quotesPref').onchange=e=>{data.quotes=e.target.checked;save();toast(e.target.checked?'Quotes will join your reminders.':'Reminders will be plain.')};
+function render(){theme();renderQuote();renderGreeting();$('todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'}).toUpperCase();renderHabits();renderTasks();renderReminders();renderStats();renderCalendar();renderStreaks();save()}
+function openHabit(id){$('habitForm').reset();$('habitExtraTimes').innerHTML='';$('habitId').value='';$('habitModalTitle').textContent=id?'Edit habit':'Add a habit';$('habitColor').value='#9d86d9';$('habitHex').value='#9d86d9';$('habitStart').value=today();document.querySelectorAll('#weekdays input').forEach(c=>c.checked=true);if(id){let h=data.habits.find(x=>x.id===id);if(!h)return;$('habitId').value=h.id;$('habitName').value=h.name;$('category').value=h.category||'Other';setHabitFormTimes(habitTimes(h));$('habitColor').value=h.color||'#9d86d9';$('habitHex').value=h.color||'#9d86d9';$('habitMessage').value=h.message||'';$('habitNotes').value=h.notes||'';$('habitStart').value=h.startDate||today();document.querySelectorAll('#weekdays input').forEach(c=>c.checked=(h.days||[]).includes(c.value))}$('habitModal').classList.add('open');$('habitName').focus({preventScroll:true})}function closeHabit(){$('habitModal').classList.remove('open')}async function deleteHabit(id){let h=data.habits.find(x=>x.id===id);if(!h||!(await askConfirm(`Delete "${h.name}" and its saved check-ins?`)))return;data.habits=data.habits.filter(x=>x.id!==id);Object.keys(data.logs).forEach(d=>{if(data.logs[d])Object.keys(data.logs[d]).forEach(k=>{if(k===id||k.startsWith(id+'@'))delete data.logs[d][k]})});save();render();toast('Habit deleted.')}
+function openReminder(id){$('reminderForm').reset();$('reminderId').value='';$('reminderModalTitle').textContent=id?'Edit reminder':'Add a reminder';$('reminderDate').value=today();$('reminderEnabled').checked=true;if(id){let r=data.reminders.find(x=>x.id===id);if(!r)return;$('reminderId').value=r.id;$('reminderName').value=r.title;$('reminderDate').value=r.date;$('reminderTime').value=r.time;$('reminderMessage').value=r.message||'';$('reminderEnabled').checked=r.enabled!==false}$('reminderModal').classList.add('open');$('reminderName').focus({preventScroll:true})}function closeReminder(){$('reminderModal').classList.remove('open')}
+function payload(){return {planner:'VIOLET_HOUR',schema_version:2,client_id:getClientId(),exported_at:new Date().toISOString(),timezone:$('timezone').value||data.timezone||Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC',theme:data.theme||'dark',preferences:{channel:'telegram',skip_if_completed:true,send_only_enabled:true,quotes:data.quotes!==false},habits:data.habits,logs:data.logs,tasks:data.tasks,reminders:data.reminders,completion_today:data.habits.map(h=>({habit_id:h.id,habit_name:h.name,completed:done(h,today()),date:today()})),progress:{date:today(),percent:pct(today()),active_habits:dayHabits(today()).length,completed_habits:dayHabits(today()).filter(h=>done(h,today())).length},sync:{source:'dark-knight-html',last_local_update:new Date().toISOString()}}}
+function getClientId(){let id=storage.getItem('violetHourClientId');if(!id){id=uid('vhclient');storage.setItem('violetHourClientId',id)}return id}
+function setSyncStatus(text,state='pending'){['syncStatus','connectionBadge'].forEach(id=>{let el=$(id);if(el){el.textContent=(id==='connectionBadge'?'● ':'')+text;el.className='status '+state}})}
+function workerUrl(){return ($('workerUrl')?.value||data.sync?.workerUrl||'').trim().replace(/\/$/,'')}
+async function testConnection(silent=false){const url=workerUrl();if(!url){setSyncStatus('Worker URL needed','pending');if(!silent)toast('Paste your Cloudflare Worker URL first.');return false}try{const r=await fetch(url,{method:'GET',headers:{'Accept':'application/json'}});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();if(!j.ok)throw new Error('Worker did not confirm readiness');setSyncStatus('Connected to relay','connected');refreshTg();if(!silent)toast('Connection test successful.');return true}catch(e){setSyncStatus('Connection failed','pending');if(!silent)toast('Could not reach Worker. Check URL and deployment.');return false}}
+async function syncWithMake(manual=true){const url=workerUrl();if(!url){setSyncStatus('Not configured','pending');if(manual)toast('Add your Cloudflare Worker URL in Sync settings.');return false}if(isSyncing)return false;isSyncing=true;setSyncStatus('Syncing…','pending');try{const body=payload();const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});let result={};try{result=await r.json()}catch{}if(!r.ok||result.ok===false)throw new Error(result.error||('HTTP '+r.status));data.sync={...(data.sync||{}),workerUrl:url,auto:$('autoSync').checked,lastSyncAt:new Date().toISOString()};storage.setItem(KEY,JSON.stringify(data));setSyncStatus('Connected · synced','connected');if(typeof result.telegram_linked==='boolean')setTg(result.telegram_linked);if(manual)toast('Planner data synced.');return true}catch(e){setSyncStatus('Sync failed','pending');if(manual)toast('Sync failed. Check the Worker URL and that its database is connected.');return false}finally{isSyncing=false}}
+$('syncNow').onclick=()=>syncWithMake(true);$('testConnection').onclick=()=>testConnection(false);$('workerUrl').onchange=()=>{data.sync={...(data.sync||{}),workerUrl:workerUrl()};save();testConnection(true)};$('autoSync').onchange=()=>{data.sync={...(data.sync||{}),auto:$('autoSync').checked};save();toast($('autoSync').checked?'Automatic sync enabled.':'Automatic sync disabled.')};$('jumpSync').onclick=()=>showPage('page-sync');
+$('timezone').value=data.timezone||Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC';$('timezone').onchange=e=>{data.timezone=e.target.value;save()};$('workerUrl').value=data.sync?.workerUrl||'';$('autoSync').checked=!!data.sync?.auto;if(data.sync?.workerUrl)setSyncStatus('Checking connection…','pending');else setSyncStatus('Not connected','pending');$('themeSelect').onchange=e=>{data.theme=e.target.value;save();theme()};$('quickTheme').onclick=()=>{data.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';save();theme();toast('Theme: '+data.theme)};$('prevMonth').onclick=()=>{data.calendarOffset=(data.calendarOffset||0)-1;save();renderCalendar()};$('nextMonth').onclick=()=>{data.calendarOffset=(data.calendarOffset||0)+1;save();renderCalendar()};$('reset').onclick=async()=>{if(!(await askConfirm('Clear all habits, check-ins, tasks and reminders from this browser? Export a backup first if needed.')))return;const sync=data.sync;data=defaults();data.sync=sync;save();render();toast('Planner reset.')};function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.target===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='page-sync'){$('workerUrl').value=data.sync?.workerUrl||'';$('autoSync').checked=!!data.sync?.auto}}document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>showPage(b.dataset.target));
+
+/* --- in-app confirm dialog (browser confirm() is blocked in Notion embeds) --- */
+function askConfirm(msg){return new Promise(res=>{const back=document.createElement('div');back.className='modalback open';back.style.zIndex=60;back.innerHTML='<div class="modal" style="max-width:380px"><h3 style="margin:0 0 10px">Please confirm</h3><p style="margin:0 0 6px;color:var(--muted)"></p><div class="modalactions"><button type="button" class="btn" data-a="no">Cancel</button><button type="button" class="btn primary" data-a="yes">Confirm</button></div></div>';back.querySelector('p').textContent=msg;const done=v=>{back.remove();res(v)};back.onclick=e=>{const a=e.target.dataset&&e.target.dataset.a;if(a)done(a==='yes');else if(e.target===back)done(false)};document.body.append(back)})}
+/* --- forms work even when the embed blocks form submission --- */
+function bindForm(formId,fn){const f=$(formId);const btn=f.querySelector('button.primary');btn.type='button';btn.onclick=fn;f.onsubmit=e=>{e.preventDefault();fn()};f.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='BUTTON'){e.preventDefault();fn()}})}
+/* --- Add / edit handlers (habits, tasks, reminders) --- */
+$('addHabit').onclick=()=>openHabit();
+$('closeHabit').onclick=$('cancelHabit').onclick=closeHabit;
+$('habitColor').oninput=e=>{$('habitHex').value=e.target.value};
+$('habitHex').oninput=e=>{let v=e.target.value.trim();if(/^#[0-9a-fA-F]{6}$/.test(v))$('habitColor').value=v};
+bindForm('habitForm',()=>{
+  let name=$('habitName').value.trim();
+  if(!name){toast('Please enter a habit name.');return}
+  let days=[...document.querySelectorAll('#weekdays input:checked')].map(c=>c.value);
+  if(!days.length){toast('Choose at least one active day.');return}
+  let hex=$('habitHex').value.trim();
+  let color=/^#[0-9a-fA-F]{6}$/.test(hex)?hex:$('habitColor').value;
+  let id=$('habitId').value;
+  let times=habitFormTimes();
+  let item={name,category:$('category').value,color,time:times[0]||'',times,days,message:$('habitMessage').value.trim(),notes:$('habitNotes').value.trim(),startDate:$('habitStart').value||today()};
+  if(id){let h=data.habits.find(x=>x.id===id);if(h)Object.assign(h,item);toast('Habit updated.')}
+  else{data.habits.push({id:uid('habit'),...item,active:true});toast('Habit added.')}
+  save();closeHabit();render();
+});
+$('openHabitsBtn').onclick=()=>showPage('page-habits');
+$('focusTask').onclick=()=>{showPage('page-tasks');setTimeout(()=>$('taskInput').focus({preventScroll:true}),50)};
+bindForm('taskForm',()=>{
+  let title=$('taskInput').value.trim();
+  if(!title)return;
+  data.tasks.push({id:uid('task'),title,done:false,createdAt:today()});
+  $('taskInput').value='';
+  save();render();toast('Task added.');
+});
+$('addReminder').onclick=()=>openReminder();
+$('closeReminder').onclick=$('cancelReminder').onclick=closeReminder;
+bindForm('reminderForm',()=>{
+  let title=$('reminderName').value.trim();
+  if(!title||!$('reminderDate').value||!$('reminderTime').value){toast('Please fill the title, date and time.');return}
+  let item={title,date:$('reminderDate').value,time:$('reminderTime').value,message:$('reminderMessage').value.trim(),enabled:$('reminderEnabled').checked};
+  let id=$('reminderId').value;
+  if(id){let r=data.reminders.find(x=>x.id===id);if(r)Object.assign(r,item);toast('Reminder updated.')}
+  else{data.reminders.push({id:uid('reminder'),...item});toast('Reminder added.')}
+  save();closeReminder();render();
+});
+['habitModal','reminderModal'].forEach(mid=>{$(mid).addEventListener('mousedown',e=>{if(e.target===$(mid)){mid==='habitModal'?closeHabit():closeReminder()}})});
+if(storage.blocked)setTimeout(()=>toast('Embedded view: data is kept in this tab only. Open the page directly to save permanently.'),700);
+
+
+/* --- Telegram connect (reminders are sent by the Cloudflare Worker) --- */
+let tgPoll=null;
+function setTg(linked){const b=$('tgBadge');if(!b)return;b.textContent=linked?'Connected ✓':'Not connected';b.className='status '+(linked?'connected':'pending');$('tgConnect').textContent=linked?'Reconnect Telegram':'Connect Telegram';if(linked){clearInterval(tgPoll);tgPoll=null;$('tgLinkNote').classList.add('hidden')}}
+async function refreshTg(){const url=workerUrl();if(!url)return false;try{const r=await fetch(`${url}/status?client_id=${encodeURIComponent(getClientId())}`);const j=await r.json();if(j.ok){setTg(!!j.linked);return !!j.linked}}catch(e){}return false}
+$('tgConnect').onclick=async()=>{
+  const url=workerUrl();
+  if(!url){toast('Add your Worker URL first.');return}
+  if(!(await syncWithMake(false))){toast('Sync failed. Check the Worker connection first.');return}
+  try{
+    const r=await fetch(`${url}/telegram-link?client_id=${encodeURIComponent(getClientId())}`);
+    const j=await r.json();
+    if(!r.ok||!j.ok)throw new Error(j.error||'Could not get the Telegram link.');
+    const a=$('tgLink');a.href=j.url;a.textContent=j.url;$('tgLinkNote').classList.remove('hidden');
+    try{window.open(j.url,'_blank','noopener')}catch(e){}
+    clearInterval(tgPoll);let n=0;
+    tgPoll=setInterval(async()=>{n++;if(await refreshTg()){toast('Telegram connected.')}else if(n>=45){clearInterval(tgPoll);tgPoll=null}},4000);
+  }catch(e){toast(e.message||'Could not get the Telegram link.')}
+};
+
+/* --- backup export / import (copy & paste code, with section picker) --- */
+const BK_PREFIX='VHBACKUP1:';
+const BK_SECTIONS=[
+  {key:'habits',label:'Habits',count:v=>(v||[]).length+' habits'},
+  {key:'logs',label:'Check-in history',count:v=>Object.keys(v||{}).length+' days'},
+  {key:'tasks',label:'Tasks',count:v=>(v||[]).length+' tasks'},
+  {key:'reminders',label:'Reminders',count:v=>(v||[]).length+' reminders'},
+  {key:'settings',label:'Theme & timezone',count:()=>'appearance'}
+];
+function bkCurrent(){return{habits:data.habits,logs:data.logs,tasks:data.tasks,reminders:data.reminders,settings:{theme:data.theme||'dark',timezone:data.timezone||''}}}
+function bkEncode(sections){const json=JSON.stringify({app:'VIOLET_HOUR',format:1,exported_at:new Date().toISOString(),sections});return BK_PREFIX+btoa(unescape(encodeURIComponent(json)))}
+function bkDecode(text){
+  let t=String(text||'').trim();if(!t)throw new Error('empty');
+  let obj;
+  if(t.startsWith(BK_PREFIX)){const b=t.slice(BK_PREFIX.length).replace(/\s+/g,'');obj=JSON.parse(decodeURIComponent(escape(atob(b))))}
+  else obj=JSON.parse(t);
+  if(!obj||typeof obj!=='object')throw new Error('bad');
+  let sec=obj.sections&&typeof obj.sections==='object'?obj.sections:{habits:obj.habits,logs:obj.logs,tasks:obj.tasks,reminders:obj.reminders,settings:(obj.theme||obj.timezone)?{theme:obj.theme,timezone:obj.timezone}:undefined};
+  const out={};
+  if(Array.isArray(sec.habits))out.habits=sec.habits.filter(h=>h&&typeof h==='object'&&h.id&&h.name);
+  if(sec.logs&&typeof sec.logs==='object'&&!Array.isArray(sec.logs))out.logs=sec.logs;
+  if(Array.isArray(sec.tasks))out.tasks=sec.tasks.filter(x=>x&&typeof x==='object'&&x.id&&x.title);
+  if(Array.isArray(sec.reminders))out.reminders=sec.reminders.filter(x=>x&&typeof x==='object'&&x.id&&x.title);
+  if(sec.settings&&typeof sec.settings==='object')out.settings=sec.settings;
+  if(!Object.keys(out).length)throw new Error('nothing');
+  return out;
+}
+/* checkbox list with an "Everything" master box */
+function bkBuildPicks(box,sections,onChange){
+  box.innerHTML='';
+  const mk=(label,note,cls)=>{const l=document.createElement('label');l.className='bk-pick '+(cls||'');l.innerHTML='<input type="checkbox" checked><span></span><small></small>';l.querySelector('span').textContent=label;l.querySelector('small').textContent=note||'';box.append(l);return l.querySelector('input')};
+  const keys=BK_SECTIONS.filter(x=>sections[x.key]!==undefined);
+  const master=mk('Everything','select all','all');
+  const boxes={};
+  keys.forEach(x=>{boxes[x.key]=mk(x.label,x.count(sections[x.key]))});
+  const sync=()=>{const v=Object.values(boxes);master.checked=v.every(b=>b.checked);master.indeterminate=!master.checked&&v.some(b=>b.checked);onChange()};
+  master.onchange=()=>{Object.values(boxes).forEach(b=>b.checked=master.checked);master.indeterminate=false;onChange()};
+  Object.values(boxes).forEach(b=>b.onchange=sync);
+  return ()=>keys.filter(x=>boxes[x.key].checked).map(x=>x.key);
+}
+let bkSelected=()=>[];
+function bkRefreshExport(){
+  const cur=bkCurrent(),keys=bkSelected(),pick={};
+  keys.forEach(k=>pick[k]=cur[k]);
+  $('expCode').value=keys.length?bkEncode(pick):'';
+  $('expCopy').disabled=!keys.length;
+}
+function openExport(){bkSelected=bkBuildPicks($('expPicks'),bkCurrent(),bkRefreshExport);bkRefreshExport();$('exportModal').classList.add('open')}
+function closeExport(){$('exportModal').classList.remove('open')}
+$('backup').onclick=$('backupTop').onclick=openExport;
+$('closeExport').onclick=$('expDone').onclick=closeExport;
+$('exportModal').addEventListener('mousedown',e=>{if(e.target===$('exportModal'))closeExport()});
+$('expCode').onclick=()=>$('expCode').select();
+$('expCopy').onclick=async()=>{
+  const ta=$('expCode');if(!ta.value)return;
+  try{await navigator.clipboard.writeText(ta.value);toast('Backup code copied.');return}catch(e){}
+  try{ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);if(document.execCommand('copy')){toast('Backup code copied.');return}}catch(e){}
+  ta.select();toast('Select the code and copy it manually.');
+};
+
+let impParsed=null,impSelected=()=>[];
+function impMsg(t,c){const m=$('impMsg');m.textContent=t||'';m.className='bk-msg '+(c||'')}
+function impReset(){impParsed=null;$('impCode').value='';impMsg('');$('impOptions').classList.add('hidden');$('impGo').disabled=true}
+function openImport(){impReset();$('importModal').classList.add('open');setTimeout(()=>{try{$('impCode').focus({preventScroll:true})}catch(e){}},50)}
+function closeImport(){$('importModal').classList.remove('open')}
+function impUpdateGo(){$('impGo').disabled=!impParsed||!impSelected().length}
+function impRead(){
+  const v=$('impCode').value;
+  if(!v.trim()){impParsed=null;impMsg('');$('impOptions').classList.add('hidden');$('impGo').disabled=true;return}
+  try{
+    impParsed=bkDecode(v);
+    impSelected=bkBuildPicks($('impPicks'),impParsed,impUpdateGo);
+    $('impOptions').classList.remove('hidden');
+    impMsg('Code is valid. Choose what to import.','ok');
+    impUpdateGo();
+  }catch(e){
+    impParsed=null;$('impOptions').classList.add('hidden');$('impGo').disabled=true;
+    impMsg('This does not look like a valid backup code. Check that you copied all of it.','err');
+  }
+}
+$('impCode').addEventListener('input',impRead);
+$('impCode').addEventListener('paste',()=>setTimeout(impRead,0));
+$('import').onclick=openImport;
+$('closeImport').onclick=$('impCancel').onclick=closeImport;
+$('importModal').addEventListener('mousedown',e=>{if(e.target===$('importModal'))closeImport()});
+function bkMergeById(cur,inc){const ids=new Set(cur.map(x=>x.id));let added=0;inc.forEach(x=>{if(!ids.has(x.id)){cur.push(copy(x));added++}});return added}
+$('impGo').onclick=async()=>{
+  if(!impParsed)return;
+  const keys=impSelected();if(!keys.length)return;
+  const mode=(document.querySelector('input[name="impMode"]:checked')||{}).value||'merge';
+  if(mode==='replace'){
+    const names=keys.map(k=>BK_SECTIONS.find(x=>x.key===k).label.toLowerCase()).join(', ');
+    if(!(await askConfirm('Replace your current '+names+' with the backup? This cannot be undone.')))return;
+  }
+  keys.forEach(k=>{
+    const inc=impParsed[k];
+    if(k==='habits'||k==='tasks'||k==='reminders'){
+      if(mode==='replace')data[k]=copy(inc);else bkMergeById(data[k],inc);
+    }else if(k==='logs'){
+      if(mode==='replace')data.logs=copy(inc);
+      else Object.keys(inc).forEach(d=>{data.logs[d]={...(data.logs[d]||{}),...inc[d]}});
+    }else if(k==='settings'){
+      if(inc.theme)data.theme=inc.theme;
+      if(inc.timezone){data.timezone=inc.timezone;$('timezone').value=inc.timezone}
+    }
+  });
+  save();render();closeImport();toast('Backup imported.');
+};
+/* Auto theme follows the device theme live */
+try{const mq=window.matchMedia('(prefers-color-scheme: light)');const onSys=()=>{if((data.theme||'dark')==='auto')theme()};mq.addEventListener?mq.addEventListener('change',onSys):mq.addListener&&mq.addListener(onSys)}catch(e){}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&(data.theme||'dark')==='auto')theme()});
+
+/* --- per-habit streak page --- */
+function habitStats(h){
+  const t=today(),end=parse(t);
+  const first=Object.keys(data.logs).sort()[0];
+  const start=h.startDate||first||t;
+  let d=parse(start),best=0,run=0,sched=0,hit=0;
+  for(let i=0;i<4000&&d<=end;i++){
+    const date=iso(d);
+    if(scheduled(h,date)){const dn=done(h,date);if(!(date===t&&!dn)){sched++;if(dn){hit++;run++;if(run>best)best=run}else run=0}}
+    d.setDate(d.getDate()+1);
+  }
+  const cur=streak(h);
+  const total=Object.keys(data.logs).filter(k=>done(h,k)).length;
+  return{current:cur,best:Math.max(best,cur),total,rate:sched?Math.round(hit/sched*100):0};
+}
+function renderStreaks(){
+  const list=$('streakList');if(!list)return;
+  list.innerHTML='';
+  const hs=data.habits.map(h=>({h,st:habitStats(h)})).sort((a,b)=>(b.h.active!==false)-(a.h.active!==false)||b.st.current-a.st.current||b.st.best-a.st.best);
+  $('streakEmpty').classList.toggle('hidden',hs.length>0);
+  const sum=$('streakSummary');
+  const top=hs.filter(x=>x.h.active!==false).sort((a,b)=>b.st.current-a.st.current)[0];
+  if(top&&top.st.current>0){sum.classList.remove('hidden');sum.textContent='Longest active streak: '+top.st.current+(top.st.current===1?' day':' days')+' · '+top.h.name}else sum.classList.add('hidden');
+  hs.forEach(({h,st})=>{
+    const el=document.createElement('div');el.className='streakcard';
+    let strip='';
+    for(let i=27;i>=0;i--){
+      const d=new Date();d.setDate(d.getDate()-i);const date=iso(d);
+      const sc=scheduled(h,date),f=sc?frac(h,date):0;
+      const cls=!sc?'off':f>=1?'on':f>0?'part':(date===today()?'wait':'miss');
+      strip+=`<i class="sd ${cls}${date===today()?' today':''}" title="${date}"></i>`;
+    }
+    el.innerHTML=`<div class="sc-top"><div class="dot" style="background:${esc(h.color||'#9d86d9')}"></div><div class="sc-name"><b>${esc(h.name)}</b><small>${esc(h.category||'Other')}${h.active===false?' · paused':''}</small></div><div class="sc-big"><b>${st.current>0?'<svg class="ic"><use href="#i-flame"/></svg> ':''}${st.current}</b><span>${st.current===1?'day':'days'} streak</span></div></div><div class="sc-stats"><div><b>${st.best}</b><span>Best streak</span></div><div><b>${st.total}</b><span>Days done</span></div><div><b>${st.rate}%</b><span>Success rate</span></div></div><div class="sc-label">Last 28 days</div><div class="sc-strip">${strip}</div>`;
+    list.append(el);
+  });
+}
+/* --- multiple reminder times per habit --- */
+function habitTimes(h){const t=Array.isArray(h.times)&&h.times.length?h.times:(h.time?[h.time]:[]);return [...new Set(t.filter(x=>/^\d{1,2}:\d{2}$/.test(String(x))).map(x=>{const[a,b]=x.split(':');return a.padStart(2,'0')+':'+b}))].sort()}
+function habitFormTimes(){const v=[$('habitTime').value,...[...document.querySelectorAll('#habitExtraTimes input')].map(i=>i.value)].filter(Boolean);return [...new Set(v)].sort()}
+function addTimeRow(v){
+  if(document.querySelectorAll('#habitExtraTimes .trow').length>=11){toast('You can add up to 12 times.');return}
+  const row=document.createElement('div');row.className='trow';
+  const inp=document.createElement('input');inp.type='time';inp.value=v||'';inp.setAttribute('aria-label','Reminder time');
+  const del=document.createElement('button');del.type='button';del.className='mini';del.title='Remove this time';del.textContent='×';
+  del.onclick=()=>row.remove();
+  row.append(inp,del);$('habitExtraTimes').append(row);
+  if(!v){try{inp.focus({preventScroll:true})}catch(e){}}
+}
+function setHabitFormTimes(times){$('habitTime').value=times[0]||'';$('habitExtraTimes').innerHTML='';times.slice(1).forEach(t=>addTimeRow(t))}
+$('addHabitTime').onclick=()=>addTimeRow('');
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeHabit();closeReminder()}});render();if(data.sync?.workerUrl)testConnection(true);
+})();
+</script></body></html>
