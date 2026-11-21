@@ -343,6 +343,7 @@ footer{font-family:var(--serif);font-style:italic;letter-spacing:.06em;text-tran
 .rv-sq.miss{background:transparent;border:1.5px solid var(--glass-edge)}.rv-sq.off{opacity:.2}
 .rv-days{display:flex;justify-content:flex-end;gap:4px;margin:2px 0 6px}.rv-days span{width:15px;text-align:center;font-size:9px;color:var(--muted)}
 .rv-line{font-family:var(--serif);font-style:italic;margin:10px 0 0;color:var(--text)}
+.wtest{justify-content:flex-start;gap:8px;flex-wrap:wrap;margin-top:12px}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -386,7 +387,8 @@ footer{font-family:var(--serif);font-style:italic;letter-spacing:.06em;text-tran
 <div class="settingrow"><div><b>Morning plan</b><small>Today&rsquo;s tasks, sent at breakfast time.</small></div><div class="wset"><input type="time" id="digestTime" value="08:00" aria-label="Morning plan time"><input type="checkbox" id="digestOn" class="switch" aria-label="Morning plan"></div></div>
 <div class="settingrow"><div><b>Friday review</b><small>How your week went, sent on Friday evening.</small></div><div class="wset"><input type="time" id="reviewTime" value="20:00" aria-label="Friday review time"><input type="checkbox" id="reviewOn" class="switch" aria-label="Friday review"></div></div>
 <div class="settingrow"><div><b>Carry over unfinished tasks</b><small>Open tasks move to the next day by themselves.</small></div><input type="checkbox" id="carryOn" class="switch" aria-label="Carry over unfinished tasks"></div>
-<p class="note wnote">Tasks with a time get their own Telegram message at that time. Tasks without a time are listed in the morning plan.</p>
+<div class="wrow wtest"><button type="button" class="btn" id="sendDigestNow">Send today's plan now</button><button type="button" class="btn" id="sendReviewNow">Send week review now</button></div>
+<p class="note wnote">Tasks with a time get their own Telegram message at that time. Tasks without a time are listed in the morning plan. The buttons above send a preview right now, so you can see what to expect.</p>
 </div>
 </section>
 <section class="section" id="tasksSection"><div class="sectionhead"><div class="sectiontitle"><div class="secticon"><svg class="ic"><use href="#i-feather"/></svg></div><div><h3>Today's Tasks</h3><p>Keep today's priorities in sight.</p></div></div><button class="iconbtn" id="focusTask" title="Add a note" aria-label="Add a note"><svg class="ic"><use href="#i-plus"/></svg></button></div><form class="inlineform" id="taskForm"><input id="taskInput" maxlength="120" placeholder="Add a task..." aria-label="New task"><input type="date" id="taskDate" aria-label="Task day (optional)" title="Day (optional)"><input type="time" id="taskTime" aria-label="Task time (optional)" title="Time (optional)"><button class="btn primary">Add</button></form><div class="list" id="taskList"></div><div class="empty hidden" id="taskEmpty">No tasks yet. Add one small next step.</div></section></div></div>
@@ -601,9 +603,9 @@ $('doodleClear').onclick=()=>{const r=peekWeek(curWeekStart());if(r){r.doodle=''
   ['pointerup','pointercancel'].forEach(n=>c.addEventListener(n,end));
   window.addEventListener('resize',()=>paintDoodle());
 })();
-function onPlanChange(){const p=data.weekPlan;p.on=$('weekPlanOn').checked;p.time=$('weekPlanTime').value||'18:00';ensurePlanHabit();save();render();toast(p.on?'Friday reminder is on.':'Friday reminder is off.')}
+function onPlanChange(){const p=data.weekPlan;p.on=$('weekPlanOn').checked;p.time=$('weekPlanTime').value||'18:00';ensurePlanHabit();save();render();pushPrefs();toast(p.on?'Friday reminder is on.':'Friday reminder is off.')}
 $('weekPlanOn').onchange=onPlanChange;$('weekPlanTime').onchange=onPlanChange;
-function onDigestChange(){const d=data.digest;d.on=$('digestOn').checked;d.time=$('digestTime').value||'08:00';save();render();toast(d.on?'Morning plan is on.':'Morning plan is off.')}
+function onDigestChange(){const d=data.digest;d.on=$('digestOn').checked;d.time=$('digestTime').value||'08:00';save();render();pushPrefs();toast(d.on?'Morning plan is on.':'Morning plan is off.')}
 $('digestOn').onchange=onDigestChange;$('digestTime').onchange=onDigestChange;
 
 /* --- carry unfinished tasks over, and the week review --- */
@@ -645,9 +647,27 @@ function renderWeekReview(ws){
   if(overall!==null)html+='<p class="rv-line">'+RV_LINES.find(x=>overall>=x[0])[1]+'</p>';
   box.innerHTML=html;
 }
-function onReviewChange(){const r=data.review;r.on=$('reviewOn').checked;r.time=$('reviewTime').value||'20:00';save();render();toast(r.on?'Friday review is on.':'Friday review is off.')}
+function onReviewChange(){const r=data.review;r.on=$('reviewOn').checked;r.time=$('reviewTime').value||'20:00';save();render();pushPrefs();toast(r.on?'Friday review is on.':'Friday review is off.')}
 $('reviewOn').onchange=onReviewChange;$('reviewTime').onchange=onReviewChange;
 $('carryOn').onchange=()=>{data.carryOver=$('carryOn').checked;data.lastCarry='';save();render();toast(data.carryOver?'Unfinished tasks will carry over.':'Tasks will stay on their day.')};
+
+/* --- planning reminders: keep the server up to date, and "send now" previews --- */
+function pushPrefs(){try{if(workerUrl())syncWithMake(false)}catch(e){}}
+async function sendNow(kind,btn){
+  const url=workerUrl();
+  if(!url){toast('Add your Worker URL first.');return}
+  btn.disabled=true;
+  try{
+    if(!(await syncWithMake(false))){toast('Sync failed. Check the Worker connection first.');return}
+    const r=await fetch(`${url}/send-now?client_id=${encodeURIComponent(getClientId())}&kind=${kind}`);
+    let j={};try{j=await r.json()}catch(e){}
+    if(!r.ok||j.ok===false)throw new Error(j.error||('HTTP '+r.status));
+    toast(j.sent?'Sent. Check Telegram.':(j.reason||'Nothing to send.'));
+  }catch(e){toast(e.message||'Could not send.')}
+  finally{btn.disabled=false}
+}
+$('sendDigestNow').onclick=e=>sendNow('digest',e.currentTarget);
+$('sendReviewNow').onclick=e=>sendNow('review',e.currentTarget);
 function render(){maybeCarry();theme();renderQuote();renderGreeting();$('todayLabel').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'}).toUpperCase();renderHabits();renderTasks();renderReminders();renderStats();renderCalendar();renderStreaks();renderWeek();applyFilters();save()}
 function openHabit(id){$('habitForm').reset();$('habitExtraTimes').innerHTML='';$('habitId').value='';$('habitModalTitle').textContent=id?'Edit habit':'Add a habit';$('habitColor').value='#9d86d9';$('habitHex').value='#9d86d9';$('habitEmoji').value='';$('habitStart').value=today();document.querySelectorAll('#weekdays input').forEach(c=>c.checked=true);if(id){let h=data.habits.find(x=>x.id===id);if(!h)return;$('habitId').value=h.id;$('habitName').value=h.name;$('category').value=h.category||'Other';setHabitFormTimes(habitTimes(h));$('habitColor').value=h.color||'#9d86d9';$('habitHex').value=h.color||'#9d86d9';$('habitEmoji').value=h.emoji||'';$('habitMessage').value=h.message||'';$('habitNotes').value=h.notes||'';$('habitStart').value=h.startDate||today();document.querySelectorAll('#weekdays input').forEach(c=>c.checked=(h.days||[]).includes(c.value))}syncEmojiUi();$('habitModal').classList.add('open');$('habitName').focus({preventScroll:true})}function closeHabit(){$('habitModal').classList.remove('open')}async function deleteHabit(id){let h=data.habits.find(x=>x.id===id);if(!h||!(await askConfirm(`Delete "${h.name}" and its saved check-ins?`)))return;data.habits=data.habits.filter(x=>x.id!==id);Object.keys(data.logs).forEach(d=>{if(data.logs[d])Object.keys(data.logs[d]).forEach(k=>{if(k===id||k.startsWith(id+'@'))delete data.logs[d][k]})});save();render();toast('Habit deleted.')}
 function openReminder(id){$('reminderForm').reset();$('reminderId').value='';$('reminderModalTitle').textContent=id?'Edit reminder':'Add a reminder';$('reminderDate').value=today();$('reminderEnabled').checked=true;if(id){let r=data.reminders.find(x=>x.id===id);if(!r)return;$('reminderId').value=r.id;$('reminderName').value=r.title;$('reminderDate').value=r.date;$('reminderTime').value=r.time;$('reminderMessage').value=r.message||'';$('reminderEnabled').checked=r.enabled!==false}$('reminderModal').classList.add('open');$('reminderName').focus({preventScroll:true})}function closeReminder(){$('reminderModal').classList.remove('open')}
